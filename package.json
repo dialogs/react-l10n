@@ -1,0 +1,36 @@
+{
+  "name": "@dlghq/react-l10n",
+  "version": "0.0.0",
+  "description": "Localization for React components",
+  "main": "lib/index.js",
+  "scripts": {
+    "pretest": "eslint src/ test/",
+    "test": "mocha --compilers js:babel-core/register",
+    "prebuild": "rm -rf lib/",
+    "build": "babel -d lib/ src/",
+    "prepublish": "npm run build",
+    "postpublish": "git push --follow-tags"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "l10n",
+    "i18n"
+  ],
+  "author": "Nikita Gusakov <gusnkt@gmail.com>",
+  "license": "Apache-2.0",
+  "peerDependencies": {
+    "react": ">=0.14"
+  },
+  "devDependencies": {
+    "@dlghq/babel-preset-dialog": "1.3.2",
+    "@dlghq/eslint-config-dialog": "1.2.0",
+    "babel-cli": "6.10.1",
+    "babel-core": "6.10.4",
+    "chai": "3.5.0",
+    "eslint": "3.1.0",
+    "mocha": "2.5.3",
+    "react": "15.2.1",
+    "react-dom": "15.2.1"
+  }
+}

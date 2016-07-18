@@ -1,0 +1,6 @@
+{
+  "extends": "@dlghq/eslint-config-dialog",
+  "env": {
+    "mocha": true
+  }
+}
