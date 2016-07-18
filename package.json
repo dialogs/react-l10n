@@ -1,6 +1,6 @@
 {
   "name": "@dlghq/react-l10n",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Localization for React components",
   "main": "lib/index.js",
   "scripts": {
