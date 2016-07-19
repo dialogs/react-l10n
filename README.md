@@ -1,6 +1,8 @@
 React localization
 ==================
 
+Localization for React components
+
 Installation
 ------------
 
