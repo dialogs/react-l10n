@@ -56,7 +56,7 @@ class Provider extends Component {
     return fallbackMessages[id] || id;
   }
 
-  getFormattedMessage(id: string, values: { [key: string]: string }, html?: boolean): string {
+  getFormattedMessage(id: string, values: { [key: string]: string } = {}, html: boolean = false): string {
     const translation = this.getTranslation(id);
     if (isEmpty(values)) {
       return translation;

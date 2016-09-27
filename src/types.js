@@ -8,7 +8,7 @@ import { PropTypes } from 'react';
 
 export type TextFormatter = (
   id: string,
-  values: { [key: string]: string },
+  values?: { [key: string]: string },
   html?: boolean
 ) => string;
 
