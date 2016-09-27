@@ -9,7 +9,7 @@ import { PropTypes } from 'react';
 export type TextFormatter = (
   id: string,
   values: { [key: string]: string },
-  html: boolean
+  html?: boolean
 ) => string;
 
 export type LocalizationContext = {
