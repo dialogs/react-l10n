@@ -2,5 +2,8 @@
   "extends": "@dlghq/eslint-config-dialog",
   "env": {
     "mocha": true
+  },
+  "rules": {
+    "no-duplicate-imports": 0
   }
 }

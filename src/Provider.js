@@ -1,51 +1,48 @@
 /**
  * Copyright 2016 Dialog LLC <info@dlg.im>
+ * @flow
  */
 
-import { Component, Children, PropTypes } from 'react';
-import { isEmpty, mapValues, escape } from 'lodash';
+import type { TextFormatter, ProviderProps, ProviderContext } from './types';
+import React, { Component, Children } from 'react';
+import isEmpty from 'lodash/isEmpty';
+import { ProviderPropType, ProviderContextType } from './types';
+import { escapeValues } from './utils';
 
 class Provider extends Component {
-  static childContextTypes = {
-    l10n: PropTypes.shape({
-      formatText: PropTypes.func.isRequired
-    })
-  };
+  props: ProviderProps;
+  formatText: TextFormatter;
 
-  static propTypes = {
-    locale: PropTypes.string.isRequired,
-    messages: PropTypes.objectOf(PropTypes.objectOf(PropTypes.string)).isRequired,
-    defaultLocale: PropTypes.string.isRequired,
-    children: PropTypes.element.isRequired
-  };
+  static childContextTypes = ProviderContextType;
+  static propTypes = ProviderPropType;
 
   static defaultProps = {
     messages: {},
     defaultLocale: 'en'
   };
 
-  constructor(props, context) {
+  constructor(props: ProviderProps, context: any) {
     super(props, context);
 
-    this.getFormattedMessage = this.getFormattedMessage.bind(this);
+    this.formatText = this.getFormattedMessage.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: ProviderProps) {
     return nextProps.children !== this.props.children ||
            nextProps.locale !== this.props.locale ||
            nextProps.messages !== this.props.messages ||
            nextProps.defaultLocale !== this.props.defaultLocale;
   }
 
-  getChildContext() {
+  getChildContext(): ProviderContext {
     return {
       l10n: {
-        formatText: this.getFormattedMessage
+        formatText: this.formatText
       }
     };
   }
 
-  getTranslation(id) {
+  getTranslation(id: string): string {
     const messages = this.props.messages[this.props.locale];
     if (messages) {
       const translation = messages[id];
@@ -59,21 +56,18 @@ class Provider extends Component {
     return fallbackMessages[id] || id;
   }
 
-  getFormattedMessage(id, values, html) {
+  getFormattedMessage(id: string, values: { [key: string]: string }, html?: boolean): string {
     const translation = this.getTranslation(id);
     if (isEmpty(values)) {
       return translation;
     }
 
-    let escapedValues = values;
-    if (html) {
-      escapedValues = mapValues(values, escape);
-    }
+    const escapedValues = html ? escapeValues(values) : values;
 
     return translation.replace(/{([a-zA-Z0-9_]+)}/, (match, key) => escapedValues[key]);
   }
 
-  render() {
+  render(): React.Element<any> {
     return Children.only(this.props.children);
   }
 }

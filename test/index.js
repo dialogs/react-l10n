@@ -1,5 +1,6 @@
 /**
  * Copyright 2016 Dialog LLC <info@dlg.im>
+ * @flow
  */
 
 import React from 'react';
@@ -8,14 +9,6 @@ import { expect } from 'chai';
 import { Provider, Text } from '../src/index';
 
 describe('@dlghq/react-l10n', () => {
-  it('should exports Provider', () => {
-    expect(Provider).to.be.a('function');
-  });
-
-  it('should exports Text', () => {
-    expect(Text).to.be.a('function');
-  });
-
   const messages = {
     en: { test: 'Test', hello: 'Hello, {name}', send: 'Send' },
     ru: { test: 'Тест', hello: '<b>Привет</b>, {name}' }
@@ -83,7 +76,7 @@ describe('@dlghq/react-l10n', () => {
 
   it('should fallback to passed id', () => {
     const html = renderToStaticMarkup(
-      <Provider messages={messages}>
+      <Provider messages={messages} locale="en">
         <Text id="unexpected_id" />
       </Provider>
     );

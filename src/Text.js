@@ -1,16 +1,21 @@
 /**
  * Copyright 2016 Dialog LLC <info@dlg.im>
+ * @flow
  */
 
-import React, { Component, PropTypes } from 'react';
+import type { TextProps, ProviderContext } from './types';
+import React, { Component } from 'react';
+import { TextPropType, LocalizationContextType } from './types';
 
 class Text extends Component {
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-    html: PropTypes.bool.isRequired,
-    values: PropTypes.objectOf(PropTypes.string).isRequired,
-    tagName: PropTypes.string.isRequired
+  props: TextProps;
+  context: ProviderContext;
+
+  static contextTypes = {
+    l10n: LocalizationContextType
   };
+
+  static propTypes = TextPropType;
 
   static defaultProps = {
     html: false,
@@ -18,13 +23,14 @@ class Text extends Component {
     tagName: 'span'
   };
 
-  static contextTypes = {
-    l10n: PropTypes.shape({
-      formatText: PropTypes.func.isRequired
-    }).isRequired
-  };
+  shouldComponentUpdate(nextProps: TextProps): boolean {
+    return nextProps.values !== this.props.values ||
+           nextProps.id !== this.props.id ||
+           nextProps.tagName !== this.props.tagName ||
+           nextProps.html !== this.props.html;
+  }
 
-  render() {
+  render(): React.Element<any> {
     const { id, html, values, tagName: Tag, ...props } = this.props;
 
     const text = this.context.l10n.formatText(id, values, html);
