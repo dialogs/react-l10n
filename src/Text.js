@@ -3,13 +3,13 @@
  * @flow
  */
 
-import type { TextProps, ProviderContext } from './types';
+import type { TextProps as Props, ProviderContext as Context } from './types';
 import React, { Component } from 'react';
 import { TextPropType, LocalizationContextType } from './types';
 
 class Text extends Component {
-  props: TextProps;
-  context: ProviderContext;
+  props: Props;
+  context: Context;
 
   static contextTypes = {
     l10n: LocalizationContextType
@@ -23,9 +23,10 @@ class Text extends Component {
     tagName: 'span'
   };
 
-  shouldComponentUpdate(nextProps: TextProps): boolean {
+  shouldComponentUpdate(nextProps: Props, nextState: any, nextContext: Context): boolean {
     return nextProps.values !== this.props.values ||
            nextProps.id !== this.props.id ||
+           nextContext !== this.context ||
            nextProps.tagName !== this.props.tagName ||
            nextProps.html !== this.props.html;
   }
