@@ -7,7 +7,7 @@ import type { TextFormatter, ProviderProps, ProviderContext } from './types';
 import React, { Component, Children } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import { ProviderPropType, ProviderContextType } from './types';
-import { escapeValues } from './utils';
+import { escapeValues, formatMessage } from './utils';
 
 class Provider extends Component {
   props: ProviderProps;
@@ -66,9 +66,11 @@ class Provider extends Component {
       return translation;
     }
 
-    const escapedValues = html ? escapeValues(values) : values;
+    if (html) {
+      return formatMessage(translation, escapeValues(values));
+    }
 
-    return translation.replace(/{([a-zA-Z0-9_]+)}/, (match, key) => escapedValues[key]);
+    return formatMessage(translation, values);
   }
 
   render(): React.Element<any> {
