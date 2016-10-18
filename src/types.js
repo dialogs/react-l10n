@@ -54,7 +54,7 @@ export const TextPropType = {
   id: PropTypes.string.isRequired,
   values: PropTypes.objectOf(
     PropTypes.string.isRequired
-  ).isRequired,
-  html: PropTypes.bool.isRequired,
-  tagName: PropTypes.string.isRequired
+  ),
+  html: PropTypes.bool,
+  tagName: PropTypes.string
 };
