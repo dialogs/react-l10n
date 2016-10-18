@@ -6,11 +6,8 @@
 import type { Element } from 'react';
 import { PropTypes } from 'react';
 
-export type TextFormatter = (
-  id: string,
-  values?: { [key: string]: string },
-  html?: boolean
-) => string;
+export type FormatValues = { [key: string]: string };
+export type TextFormatter = (id: string, values?: FormatValues, html?: boolean) => string;
 
 export type LocalizationContext = {
   formatText: TextFormatter
@@ -24,9 +21,7 @@ export type ProviderProps = {
   locale: string,
   defaultLocale: string,
   messages: {
-    [locale: string]: {
-      [id: string]: string
-    }
+    [locale: string]: FormatValues
   },
   children?: Element<any>
 };
@@ -50,11 +45,9 @@ export const ProviderContextType = {
 
 export type TextProps = {
   id: string,
-  values: {
-    [key: string]: string
-  },
-  html: boolean,
-  tagName: string
+  values?: FormatValues,
+  html?: boolean,
+  tagName?: string
 };
 
 export const TextPropType = {
