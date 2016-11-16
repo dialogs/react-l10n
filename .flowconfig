@@ -16,9 +16,9 @@
 module.system=haste
 module.use_strict=true
 
-esproposal.class_static_fields=enable
 suppress_type=$FlowIssue
-suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(>=0\\.\\(2[0-8]\\|1[0-9]\\|[0-9]\\).[0-9]\\)? *\\).*\n
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
+esproposal.class_static_fields=enable
 
 [version]
-0.33.0
+0.35.0
