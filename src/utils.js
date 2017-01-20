@@ -13,5 +13,5 @@ export function escapeValues(values: StringToString): StringToString {
 }
 
 export function formatMessage(message: string, values: { [key: string]: string }): string {
-  return message.replace(/{([a-zA-Z0-9_]+)}/, (match, key) => values[key]);
+  return message.replace(/{([a-zA-Z0-9_]+)}/g, (match, key) => values[key]);
 }
