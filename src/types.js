@@ -23,6 +23,7 @@ export type ProviderProps = {
   messages: {
     [locale: string]: FormatValues
   },
+  globalValues: FormatValues,
   children?: Element<any>
 };
 
@@ -30,6 +31,9 @@ export const ProviderPropType = {
   locale: PropTypes.string.isRequired,
   defaultLocale: PropTypes.string.isRequired,
   messages: PropTypes.objectOf(
+    PropTypes.objectOf(PropTypes.string)
+  ).isRequired,
+  globalValues: PropTypes.objectOf(
     PropTypes.objectOf(PropTypes.string)
   ).isRequired,
   children: PropTypes.element.isRequired

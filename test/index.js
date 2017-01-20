@@ -113,4 +113,24 @@ describe('@dlghq/react-l10n', () => {
 
     expect(html).equal('<span><b>Привет</b>, &lt;b&gt;nkt&lt;/b&gt;</span>');
   });
+
+  it('should use global values', () => {
+    const html = renderToStaticMarkup(
+      <Provider locale="en" messages={messages} globalValues={{ name: 'dialog' }}>
+        <Text id="hello" />
+      </Provider>
+    );
+
+    expect(html).equal('<span>Hello, dialog</span>');
+  });
+
+  it('should use local value instead of global', () => {
+    const html = renderToStaticMarkup(
+      <Provider locale="en" messages={messages} globalValues={{ name: 'dialog' }}>
+        <Text id="hello" values={{ name: 'world' }} />
+      </Provider>
+    );
+
+    expect(html).equal('<span>Hello, world</span>');
+  });
 });

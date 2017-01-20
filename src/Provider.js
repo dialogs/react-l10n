@@ -5,7 +5,6 @@
 
 import type { TextFormatter, ProviderProps, ProviderContext } from './types';
 import React, { Component, Children } from 'react';
-import isEmpty from 'lodash/isEmpty';
 import { ProviderPropType, ProviderContextType } from './types';
 import { escapeValues, formatMessage } from './utils';
 
@@ -18,7 +17,8 @@ class Provider extends Component {
 
   static defaultProps = {
     messages: {},
-    defaultLocale: 'en'
+    defaultLocale: 'en',
+    globalValues: {}
   };
 
   constructor(props: ProviderProps, context: any) {
@@ -62,15 +62,13 @@ class Provider extends Component {
     html: boolean = false
   ): string {
     const translation = this.getTranslation(id);
-    if (isEmpty(values)) {
-      return translation;
-    }
+    const _values = Object.assign({}, this.props.globalValues, values);
 
     if (html) {
-      return formatMessage(translation, escapeValues(values));
+      return formatMessage(translation, escapeValues(_values));
     }
 
-    return formatMessage(translation, values);
+    return formatMessage(translation, _values);
   }
 
   render(): React.Element<any> {
