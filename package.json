@@ -28,14 +28,14 @@
     "react": ">=0.14"
   },
   "devDependencies": {
-    "@dlghq/babel-preset-dialog": "2.5.0",
-    "@dlghq/eslint-config-dialog": "1.15.0",
-    "babel-core": "6.18.2",
+    "@dlghq/babel-preset-dialog": "3.0.1",
+    "@dlghq/eslint-config-dialog": "1.20.0",
+    "babel-core": "6.22.1",
     "chai": "3.5.0",
-    "eslint": "3.10.2",
-    "flow-bin": "0.35.0",
-    "mocha": "3.1.2",
-    "react": "15.4.0",
-    "react-dom": "15.4.0"
+    "eslint": "3.13.1",
+    "flow-bin": "0.38.0",
+    "mocha": "3.2.0",
+    "react": "15.4.2",
+    "react-dom": "15.4.2"
   }
 }

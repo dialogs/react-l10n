@@ -19,6 +19,3 @@ module.use_strict=true
 suppress_type=$FlowIssue
 suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
 esproposal.class_static_fields=enable
-
-[version]
-0.35.0
