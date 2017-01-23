@@ -33,9 +33,7 @@ export const ProviderPropType = {
   messages: PropTypes.objectOf(
     PropTypes.objectOf(PropTypes.string)
   ).isRequired,
-  globalValues: PropTypes.objectOf(
-    PropTypes.objectOf(PropTypes.string)
-  ).isRequired,
+  globalValues: PropTypes.objectOf(PropTypes.string).isRequired,
   children: PropTypes.element.isRequired
 };
 
