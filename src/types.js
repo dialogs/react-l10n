@@ -6,7 +6,7 @@
 import type { Element } from 'react';
 import { PropTypes } from 'react';
 
-export type FormatValues = { [key: string]: string };
+export type FormatValues = { [key: string]: string | number };
 export type TextFormatter = (id: string, values?: FormatValues, html?: boolean) => string;
 
 export type LocalizationContext = {
