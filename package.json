@@ -3,9 +3,8 @@
   "version": "0.7.1",
   "description": "Localization for React components",
   "main": "src/index.js",
-  "lib": [
-    "src",
-    "test"
+  "files": [
+    "src"
   ],
   "scripts": {
     "pretest": "npm run lint && npm run flow",
@@ -24,18 +23,21 @@
   ],
   "author": "Nikita Gusakov <gusnkt@gmail.com>",
   "license": "Apache-2.0",
+  "dependencies": {
+    "prop-types": "^15.5.4"
+  },
   "peerDependencies": {
-    "react": ">=0.14"
+    "react": "^15.3.0 || ^16.0.0-alpha"
   },
   "devDependencies": {
-    "@dlghq/babel-preset-dialog": "3.0.1",
-    "@dlghq/eslint-config-dialog": "1.20.0",
-    "babel-core": "6.22.1",
+    "@dlghq/babel-preset-dialog": "3.3.0",
+    "@dlghq/eslint-config-dialog": "1.25.0",
+    "babel-core": "6.24.1",
     "chai": "3.5.0",
-    "eslint": "3.13.1",
-    "flow-bin": "0.38.0",
-    "mocha": "3.2.0",
-    "react": "15.4.2",
-    "react-dom": "15.4.2"
+    "eslint": "3.19.0",
+    "flow-bin": "0.45.0",
+    "mocha": "3.3.0",
+    "react": "15.5.4",
+    "react-dom": "15.5.4"
   }
 }

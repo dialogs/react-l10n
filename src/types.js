@@ -4,7 +4,7 @@
  */
 
 import type { Element } from 'react';
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 
 export type FormatValues = { [key: string]: string };
 export type TextFormatter = (id: string, values?: FormatValues, html?: boolean) => string;
