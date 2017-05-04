@@ -10,11 +10,13 @@ export type FormatValues = { [key: string]: string };
 export type TextFormatter = (id: string, values?: FormatValues, html?: boolean) => string;
 
 export type LocalizationContext = {
-  formatText: TextFormatter
+  formatText: TextFormatter,
+  locale: string
 };
 
 export const LocalizationContextType = PropTypes.shape({
-  formatText: PropTypes.func.isRequired
+  formatText: PropTypes.func.isRequired,
+  locale: PropTypes.string.isRequired
 });
 
 export type ProviderProps = {

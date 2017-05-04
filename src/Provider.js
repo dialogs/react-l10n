@@ -37,7 +37,8 @@ class Provider extends Component {
   getChildContext(): ProviderContext {
     return {
       l10n: {
-        formatText: this.formatText
+        formatText: this.formatText,
+        locale: this.props.locale
       }
     };
   }
