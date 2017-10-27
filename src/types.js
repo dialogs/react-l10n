@@ -16,7 +16,8 @@ export type LocalizationContext = {
   formatText: TextFormatter,
   locale: string,
   messages: ProviderMessages,
-  globalValues: FormatValues
+  globalValues: FormatValues,
+  defaultLocale: string
 };
 
 export const LocalizationContextType = PropTypes.shape({
@@ -25,7 +26,8 @@ export const LocalizationContextType = PropTypes.shape({
   messages: PropTypes.objectOf(
     PropTypes.objectOf(PropTypes.string)
   ).isRequired,
-  globalValues: PropTypes.objectOf(PropTypes.string)
+  globalValues: PropTypes.objectOf(PropTypes.string),
+  defaultLocale: PropTypes.string.isRequired
 });
 
 export type ProviderProps = {

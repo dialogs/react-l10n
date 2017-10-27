@@ -7,7 +7,6 @@ import type { TextFormatter, ProviderProps, ProviderContext } from './types';
 import React, { Component, Children } from 'react';
 import { ProviderPropType, ProviderContextType, LocalizationContextType } from './types';
 import { escapeValues, formatMessage } from './utils';
-import defaultsDeep from 'lodash/defaultsDeep';
 
 class Provider extends Component {
   props: ProviderProps;
@@ -48,18 +47,11 @@ class Provider extends Component {
       l10n: {
         formatText: this.formatText,
         locale: this.props.locale,
-        messages: this.getMessages(),
-        globalValues: this.getGlobalValues()
+        messages: this.props.messages,
+        globalValues: this.getGlobalValues(),
+        defaultLocale: this.props.defaultLocale
       }
     };
-  }
-
-  getMessages() {
-    if (this.context.l10n) {
-      return defaultsDeep({}, this.context.l10n.messages, this.props.messages);
-    }
-
-    return this.props.messages;
   }
 
   getGlobalValues() {
@@ -71,17 +63,31 @@ class Provider extends Component {
   }
 
   getTranslation(id: string): string {
-    const messages = this.getMessages();
-    const localeMessages = messages[this.props.locale];
+    const messages = this.props.messages[this.props.locale];
+    const fallbackMessages = this.props.messages[this.props.defaultLocale];
 
-    if (localeMessages) {
-      const translation = localeMessages[id];
+    if (messages) {
+      const translation = messages[id];
       if (translation) {
         return translation;
       }
     }
 
-    const fallbackMessages = messages[this.props.defaultLocale];
+    if (this.context.l10n) {
+      const contextMessages = this.context.l10n.messages[this.props.locale];
+
+      if (contextMessages) {
+        const contextTranslation = contextMessages[id];
+
+        if (contextTranslation) {
+          return contextTranslation;
+        }
+      }
+
+      const contextFallbackMessages = this.context.l10n.messages[this.props.defaultLocale];
+
+      return fallbackMessages[id] || contextFallbackMessages[id] || id;
+    }
 
     return fallbackMessages[id] || id;
   }
