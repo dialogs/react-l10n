@@ -8,23 +8,30 @@ import PropTypes from 'prop-types';
 
 export type FormatValues = { [key: string]: string };
 export type TextFormatter = (id: string, values?: FormatValues, html?: boolean) => string;
+export type ProviderMessages = {
+  [locale: string]: FormatValues
+};
 
 export type LocalizationContext = {
   formatText: TextFormatter,
-  locale: string
+  locale: string,
+  messages: ProviderMessages,
+  globalValues: FormatValues
 };
 
 export const LocalizationContextType = PropTypes.shape({
   formatText: PropTypes.func.isRequired,
-  locale: PropTypes.string.isRequired
+  locale: PropTypes.string.isRequired,
+  messages: PropTypes.objectOf(
+    PropTypes.objectOf(PropTypes.string)
+  ).isRequired,
+  globalValues: PropTypes.objectOf(PropTypes.string)
 });
 
 export type ProviderProps = {
   locale: string,
   defaultLocale: string,
-  messages: {
-    [locale: string]: FormatValues
-  },
+  messages: ProviderMessages,
   globalValues: FormatValues,
   children?: Element<any>
 };
@@ -35,7 +42,7 @@ export const ProviderPropType = {
   messages: PropTypes.objectOf(
     PropTypes.objectOf(PropTypes.string)
   ).isRequired,
-  globalValues: PropTypes.objectOf(PropTypes.string).isRequired,
+  globalValues: PropTypes.objectOf(PropTypes.string),
   children: PropTypes.element.isRequired
 };
 

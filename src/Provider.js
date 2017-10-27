@@ -5,12 +5,13 @@
 
 import type { TextFormatter, ProviderProps, ProviderContext } from './types';
 import React, { Component, Children } from 'react';
-import { ProviderPropType, ProviderContextType } from './types';
+import { ProviderPropType, ProviderContextType, LocalizationContextType } from './types';
 import { escapeValues, formatMessage } from './utils';
+import defaultsDeep from 'lodash/defaultsDeep';
 
 class Provider extends Component {
   props: ProviderProps;
-
+  context: ProviderContext;
   formatText: TextFormatter;
 
   static childContextTypes = ProviderContextType;
@@ -23,7 +24,11 @@ class Provider extends Component {
     globalValues: {}
   };
 
-  constructor(props: ProviderProps, context: any) {
+  static contextTypes = {
+    l10n: LocalizationContextType
+  };
+
+  constructor(props: ProviderProps, context: ProviderContext) {
     super(props, context);
 
     this.formatText = this.getFormattedMessage.bind(this);
@@ -42,28 +47,49 @@ class Provider extends Component {
     return {
       l10n: {
         formatText: this.formatText,
-        locale: this.props.locale
+        locale: this.props.locale,
+        messages: this.getMessages(),
+        globalValues: this.getGlobalValues()
       }
     };
   }
 
+  getMessages() {
+    if (this.context.l10n) {
+      return defaultsDeep({}, this.context.l10n.messages, this.props.messages);
+    }
+
+    return this.props.messages;
+  }
+
+  getGlobalValues() {
+    if (this.context.l10n) {
+      return Object.assign({}, this.context.l10n.globalValues, this.props.globalValues);
+    }
+
+    return this.props.globalValues;
+  }
+
   getTranslation(id: string): string {
-    const messages = this.props.messages[this.props.locale];
-    if (messages) {
-      const translation = messages[id];
+    const messages = this.getMessages();
+    const localeMessages = messages[this.props.locale];
+
+    if (localeMessages) {
+      const translation = localeMessages[id];
       if (translation) {
         return translation;
       }
     }
 
-    const fallbackMessages = this.props.messages[this.props.defaultLocale];
+    const fallbackMessages = messages[this.props.defaultLocale];
 
     return fallbackMessages[id] || id;
   }
 
   getFormattedMessage(id: string, values: { [key: string]: string } = {}, html: boolean = false): string {
     const translation = this.getTranslation(id);
-    const _values = Object.assign({}, this.props.globalValues, values);
+    const globalValues = this.getGlobalValues();
+    const _values = Object.assign({}, globalValues, values);
 
     if (html) {
       return formatMessage(translation, escapeValues(_values));

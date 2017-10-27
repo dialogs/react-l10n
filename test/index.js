@@ -13,6 +13,10 @@ describe('@dlghq/react-l10n', () => {
     en: { test: 'Test', hello: 'Hello, {name}', send: 'Send' },
     ru: { test: 'Тест', hello: '<b>Привет</b>, {name}' }
   };
+  const childMessages = {
+    en: { child: 'Nice to meet you' },
+    ru: { child: 'Приятно познакомиться' }
+  };
 
   it('should translate text', () => {
     const html = renderToStaticMarkup(
@@ -132,5 +136,29 @@ describe('@dlghq/react-l10n', () => {
     );
 
     expect(html).equal('<span>Hello, world</span>');
+  });
+
+  it('should render messages from child provider', () => {
+    const html = renderToStaticMarkup(
+      <Provider locale="en" messages={messages}>
+        <Provider locale="en" messages={childMessages}>
+          <Text id="child" />
+        </Provider>
+      </Provider>
+    );
+
+    expect(html).equal('<span>Nice to meet you</span>');
+  });
+
+  it('should render messages from parent provider inside child provider', () => {
+    const html = renderToStaticMarkup(
+      <Provider locale="ru" messages={messages}>
+        <Provider locale="ru" messages={childMessages}>
+          <Text id="hello" values={{ name: 'мир' }} />
+        </Provider>
+      </Provider>
+    );
+
+    expect(html).equal('<span>&lt;b&gt;Привет&lt;/b&gt;, мир</span>');
   });
 });
