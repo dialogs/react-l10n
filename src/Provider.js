@@ -3,7 +3,7 @@
  * @flow
  */
 
-import type { TextFormatter, ProviderProps, ProviderContext } from './types';
+import type { TextFormatter, ProviderProps, ProviderContext, FormatValues } from './types';
 import React, { Component, Children } from 'react';
 import { ProviderPropType, ProviderContextType, LocalizationContextType } from './types';
 import { escapeValues, formatMessage } from './utils';
@@ -12,6 +12,7 @@ class Provider extends Component {
   props: ProviderProps;
   context: ProviderContext;
   formatText: TextFormatter;
+  globalValues: FormatValues;
 
   static childContextTypes = ProviderContextType;
 
@@ -31,6 +32,7 @@ class Provider extends Component {
     super(props, context);
 
     this.formatText = this.getFormattedMessage.bind(this);
+    this.globalValues = Object.assign({}, context.l10n.globalValues, props.globalValues);
   }
 
   shouldComponentUpdate(nextProps: ProviderProps) {
@@ -48,18 +50,10 @@ class Provider extends Component {
         formatText: this.formatText,
         locale: this.props.locale,
         messages: this.props.messages,
-        globalValues: this.getGlobalValues(),
+        globalValues: this.globalValues,
         defaultLocale: this.props.defaultLocale
       }
     };
-  }
-
-  getGlobalValues() {
-    if (this.context.l10n) {
-      return Object.assign({}, this.context.l10n.globalValues, this.props.globalValues);
-    }
-
-    return this.props.globalValues;
   }
 
   getTranslation(id: string): string {
@@ -94,8 +88,7 @@ class Provider extends Component {
 
   getFormattedMessage(id: string, values: { [key: string]: string } = {}, html: boolean = false): string {
     const translation = this.getTranslation(id);
-    const globalValues = this.getGlobalValues();
-    const _values = Object.assign({}, globalValues, values);
+    const _values = Object.assign({}, this.globalValues, values);
 
     if (html) {
       return formatMessage(translation, escapeValues(_values));
