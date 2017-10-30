@@ -3,9 +3,18 @@
  * @flow
  */
 
-import type { TextFormatter, ProviderProps, ProviderContext, FormatValues } from './types';
+import type {
+  TextFormatter,
+  ProviderProps,
+  ProviderContext,
+  FormatValues
+} from './types';
 import React, { Component, Children } from 'react';
-import { ProviderPropType, ProviderContextType, LocalizationContextType } from './types';
+import {
+  ProviderPropType,
+  ProviderContextType,
+  LocalizationContextType
+} from './types';
 import { escapeValues, formatMessage } from './utils';
 
 class Provider extends Component {
@@ -32,7 +41,9 @@ class Provider extends Component {
     super(props, context);
 
     this.formatText = this.getFormattedMessage.bind(this);
-    this.globalValues = Object.assign({}, context.l10n.globalValues, props.globalValues);
+    this.globalValues = context.l10n
+      ? Object.assign({}, context.l10n.globalValues, props.globalValues)
+      : props.globalValues;
   }
 
   shouldComponentUpdate(nextProps: ProviderProps) {
@@ -78,7 +89,9 @@ class Provider extends Component {
         }
       }
 
-      const contextFallbackMessages = this.context.l10n.messages[this.props.defaultLocale];
+      const contextFallbackMessages = this.context.l10n.messages[
+        this.props.defaultLocale
+      ];
 
       return fallbackMessages[id] || contextFallbackMessages[id] || id;
     }
