@@ -21,7 +21,6 @@ class Provider extends Component {
   props: ProviderProps;
   context: $Shape<ProviderContext>;
   formatText: TextFormatter;
-  globalValues: FormatValues;
 
   static childContextTypes = ProviderContextType;
 
@@ -41,9 +40,6 @@ class Provider extends Component {
     super(props, context);
 
     this.formatText = this.getFormattedMessage.bind(this);
-    this.globalValues = context.l10n
-      ? Object.assign({}, context.l10n.globalValues, props.globalValues)
-      : props.globalValues;
   }
 
   shouldComponentUpdate(nextProps: ProviderProps, nextState: void, nextContext: $Shape<ProviderContext> = {}) {
@@ -133,13 +129,12 @@ class Provider extends Component {
 
   getFormattedMessage(id: string, values: FormatValues = {}, html: boolean = false): string {
     const translation = this.getTranslation(id);
-    const _values = Object.assign({}, this.globalValues, values);
 
     if (html) {
-      return formatMessage(translation, escapeValues(_values));
+      return formatMessage(translation, escapeValues(values));
     }
 
-    return formatMessage(translation, _values);
+    return formatMessage(translation, values);
   }
 
   render() {

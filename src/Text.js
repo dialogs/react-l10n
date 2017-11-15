@@ -15,7 +15,9 @@ function Text(props: Props, context: Context) {
     tagName: Tag = 'span',
     ...optional
   } = props;
-  const text = context.l10n.formatText(id, values, html);
+
+  const { l10n } = context;
+  const text = l10n.formatText(id, Object.assign({}, l10n.globalValues, values), html);
 
   if (html) {
     return <Tag {...optional} dangerouslySetInnerHTML={{ __html: text }} />;
