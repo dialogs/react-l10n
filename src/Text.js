@@ -7,7 +7,7 @@ import type { TextProps as Props, ProviderContext as Context } from './types';
 import React from 'react';
 import { TextPropType, LocalizationContextType } from './types';
 
-function Text(props: Props, context: Context): React.Element<any> {
+function Text(props: Props, context: Context) {
   const {
     id,
     html,

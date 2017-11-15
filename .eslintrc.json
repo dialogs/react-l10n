@@ -4,6 +4,7 @@
     "mocha": true
   },
   "rules": {
-    "no-duplicate-imports": 0
+    "no-duplicate-imports": 0,
+    "lines-between-class-members": 0
   }
 }

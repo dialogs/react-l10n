@@ -9,7 +9,7 @@ import type {
   ProviderContext,
   FormatValues
 } from './types';
-import React, { Component, Children } from 'react';
+import { Component, Children } from 'react';
 import {
   ProviderPropType,
   ProviderContextType,
@@ -19,7 +19,7 @@ import { escapeValues, formatMessage } from './utils';
 
 class Provider extends Component {
   props: ProviderProps;
-  context: ProviderContext;
+  context: $Shape<ProviderContext>;
   formatText: TextFormatter;
   globalValues: FormatValues;
 
@@ -37,7 +37,7 @@ class Provider extends Component {
     l10n: LocalizationContextType
   };
 
-  constructor(props: ProviderProps, context: ProviderContext) {
+  constructor(props: ProviderProps, context: $Shape<ProviderContext> = {}) {
     super(props, context);
 
     this.formatText = this.getFormattedMessage.bind(this);
@@ -46,13 +46,30 @@ class Provider extends Component {
       : props.globalValues;
   }
 
-  shouldComponentUpdate(nextProps: ProviderProps) {
+  shouldComponentUpdate(nextProps: ProviderProps, nextState: void, nextContext: $Shape<ProviderContext> = {}) {
     return (
       nextProps.children !== this.props.children ||
       nextProps.locale !== this.props.locale ||
       nextProps.messages !== this.props.messages ||
-      nextProps.defaultLocale !== this.props.defaultLocale
+      nextProps.defaultLocale !== this.props.defaultLocale ||
+      nextContext.l10n !== this.context.l10n
     );
+  }
+
+  getGlobalValues(): FormatValues {
+    const { globalValues } = this.props;
+
+    if (this.context.l10n) {
+      return Object.assign({}, this.context.l10n.globalValues, globalValues);
+    }
+
+    return globalValues;
+  }
+
+  getDefaultLocale(): string {
+    return this.props.defaultLocale ||
+           (this.context.l10n && this.context.l10n.defaultLocale) ||
+           'en';
   }
 
   getChildContext(): ProviderContext {
@@ -61,16 +78,15 @@ class Provider extends Component {
         formatText: this.formatText,
         locale: this.props.locale,
         messages: this.props.messages,
-        globalValues: this.globalValues,
-        defaultLocale: this.props.defaultLocale
+        globalValues: this.getGlobalValues(),
+        defaultLocale: this.getDefaultLocale()
       }
     };
   }
 
   getTranslation(id: string): string {
+    // trying messages with correct locale
     const messages = this.props.messages[this.props.locale];
-    const fallbackMessages = this.props.messages[this.props.defaultLocale];
-
     if (messages) {
       const translation = messages[id];
       if (translation) {
@@ -78,28 +94,44 @@ class Provider extends Component {
       }
     }
 
+    // trying parent messages with correct locale
     if (this.context.l10n) {
       const contextMessages = this.context.l10n.messages[this.props.locale];
-
       if (contextMessages) {
         const contextTranslation = contextMessages[id];
-
         if (contextTranslation) {
           return contextTranslation;
         }
       }
-
-      const contextFallbackMessages = this.context.l10n.messages[
-        this.props.defaultLocale
-      ];
-
-      return fallbackMessages[id] || contextFallbackMessages[id] || id;
     }
 
-    return fallbackMessages[id] || id;
+    const defaultLocale = this.getDefaultLocale();
+
+    // trying fallback messages with default locale
+    const fallbackMessages = this.props.messages[defaultLocale];
+    if (fallbackMessages) {
+      const fallbackTranslation = fallbackMessages[id];
+      if (fallbackTranslation) {
+        return fallbackTranslation;
+      }
+    }
+
+    // trying parent fallback messages with default locale
+    if (this.context.l10n) {
+      const contextFallbackMessages = this.context.l10n.messages[defaultLocale];
+      if (contextFallbackMessages) {
+        const contextFallbackTranslation = contextFallbackMessages[id];
+        if (contextFallbackTranslation) {
+          return contextFallbackTranslation;
+        }
+      }
+    }
+
+    // fallback to id
+    return id;
   }
 
-  getFormattedMessage(id: string, values: { [key: string]: string } = {}, html: boolean = false): string {
+  getFormattedMessage(id: string, values: FormatValues = {}, html: boolean = false): string {
     const translation = this.getTranslation(id);
     const _values = Object.assign({}, this.globalValues, values);
 
@@ -110,7 +142,7 @@ class Provider extends Component {
     return formatMessage(translation, _values);
   }
 
-  render(): React.Element<any> {
+  render() {
     return Children.only(this.props.children);
   }
 }

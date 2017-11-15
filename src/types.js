@@ -32,7 +32,7 @@ export const LocalizationContextType = PropTypes.shape({
 
 export type ProviderProps = {
   locale: string,
-  defaultLocale: string,
+  defaultLocale?: string,
   messages: ProviderMessages,
   globalValues: FormatValues,
   children?: Element<any>

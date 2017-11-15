@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "pretest": "npm run lint && npm run flow",
-    "flow": "flow check",
+    "flow": "flow",
     "lint": "eslint src/ test/",
     "test": "mocha --require babel-core/register",
     "preversion": "npm test",
