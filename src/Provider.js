@@ -10,9 +10,11 @@ import { escapeValues, formatMessage } from './utils';
 
 class Provider extends Component {
   props: ProviderProps;
+
   formatText: TextFormatter;
 
   static childContextTypes = ProviderContextType;
+
   static propTypes = ProviderPropType;
 
   static defaultProps = {
@@ -28,10 +30,12 @@ class Provider extends Component {
   }
 
   shouldComponentUpdate(nextProps: ProviderProps) {
-    return nextProps.children !== this.props.children ||
-           nextProps.locale !== this.props.locale ||
-           nextProps.messages !== this.props.messages ||
-           nextProps.defaultLocale !== this.props.defaultLocale;
+    return (
+      nextProps.children !== this.props.children ||
+      nextProps.locale !== this.props.locale ||
+      nextProps.messages !== this.props.messages ||
+      nextProps.defaultLocale !== this.props.defaultLocale
+    );
   }
 
   getChildContext(): ProviderContext {
@@ -57,11 +61,7 @@ class Provider extends Component {
     return fallbackMessages[id] || id;
   }
 
-  getFormattedMessage(
-    id: string,
-    values: { [key: string]: string } = {},
-    html: boolean = false
-  ): string {
+  getFormattedMessage(id: string, values: { [key: string]: string } = {}, html: boolean = false): string {
     const translation = this.getTranslation(id);
     const _values = Object.assign({}, this.props.globalValues, values);
 
