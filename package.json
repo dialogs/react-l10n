@@ -31,12 +31,12 @@
   },
   "devDependencies": {
     "@dlghq/babel-preset-dialog": "3.4.2",
-    "@dlghq/eslint-config-dialog": "3.3.0",
+    "@dlghq/eslint-config-dialog": "3.3.1",
     "babel-core": "6.26.0",
     "chai": "4.1.2",
     "eslint": "4.11.0",
-    "eslint-plugin-react": "7.4.0",
-    "flow-bin": "0.45.0",
+    "eslint-plugin-react": "7.5.0",
+    "flow-bin": "0.59.0",
     "mocha": "4.0.1",
     "react": "16.1.1",
     "react-dom": "16.1.1"

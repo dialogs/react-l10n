@@ -17,8 +17,7 @@ import {
 } from './types';
 import { escapeValues, formatMessage } from './utils';
 
-class Provider extends Component {
-  props: ProviderProps;
+class Provider extends Component<ProviderProps> {
   context: $Shape<ProviderContext>;
   formatText: TextFormatter;
 
