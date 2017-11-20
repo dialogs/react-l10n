@@ -161,4 +161,16 @@ describe('@dlghq/react-l10n', () => {
 
     expect(html).equal('<span>&lt;b&gt;Привет&lt;/b&gt;, мир</span>');
   });
+
+  it('should use global value inside child provider', () => {
+    const html = renderToStaticMarkup(
+      <Provider locale="ru" messages={messages} globalValues={{ name: 'dialog' }}>
+        <Provider locale="ru" messages={childMessages}>
+          <Text id="hello" />
+        </Provider>
+      </Provider>
+    );
+
+    expect(html).equal('<span>&lt;b&gt;Привет&lt;/b&gt;, dialog</span>');
+  });
 });
