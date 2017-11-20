@@ -15,11 +15,12 @@ import {
   ProviderContextType,
   LocalizationContextType
 } from './types';
-import { escapeValues, formatMessage } from './utils';
+import { escapeValues, formatMessage, getGlobalValues } from './utils';
 
 class Provider extends Component<ProviderProps> {
   context: $Shape<ProviderContext>;
   formatText: TextFormatter;
+  globalValues: FormatValues;
 
   static childContextTypes = ProviderContextType;
 
@@ -38,6 +39,7 @@ class Provider extends Component<ProviderProps> {
   constructor(props: ProviderProps, context: $Shape<ProviderContext> = {}) {
     super(props, context);
 
+    this.globalValues = getGlobalValues(props, context);
     this.formatText = this.getFormattedMessage.bind(this);
   }
 
@@ -51,14 +53,8 @@ class Provider extends Component<ProviderProps> {
     );
   }
 
-  getGlobalValues(): FormatValues {
-    const { globalValues } = this.props;
-
-    if (this.context.l10n) {
-      return Object.assign({}, this.context.l10n.globalValues, globalValues);
-    }
-
-    return globalValues;
+  componentWillUpdate(nextProps: ProviderProps, nextState: void, nextContext?: ?$Shape<ProviderContext>) {
+    this.globalValues = getGlobalValues(nextProps, nextContext);
   }
 
   getDefaultLocale(): string {
@@ -73,7 +69,7 @@ class Provider extends Component<ProviderProps> {
         formatText: this.formatText,
         locale: this.props.locale,
         messages: this.props.messages,
-        globalValues: this.getGlobalValues(),
+        globalValues: this.globalValues,
         defaultLocale: this.getDefaultLocale()
       }
     };
@@ -129,11 +125,13 @@ class Provider extends Component<ProviderProps> {
   getFormattedMessage(id: string, values: FormatValues = {}, html: boolean = false): string {
     const translation = this.getTranslation(id);
 
+    const mergedValues = Object.assign({}, this.globalValues, values);
+
     if (html) {
-      return formatMessage(translation, escapeValues(values));
+      return formatMessage(translation, escapeValues(mergedValues));
     }
 
-    return formatMessage(translation, values);
+    return formatMessage(translation, mergedValues);
   }
 
   render() {

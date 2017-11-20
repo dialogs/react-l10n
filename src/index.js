@@ -8,7 +8,9 @@ import type {
   LocalizationContext,
   ProviderProps,
   ProviderContext,
-  TextProps
+  TextProps,
+  FormatValues,
+  ProviderMessages
 } from './types';
 import Provider from './Provider';
 import Text from './Text';
@@ -25,5 +27,7 @@ export type {
   LocalizationContext,
   ProviderProps,
   ProviderContext,
-  TextProps
+  TextProps,
+  FormatValues,
+  ProviderMessages
 };
