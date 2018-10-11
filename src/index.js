@@ -13,13 +13,15 @@ import type {
   ProviderMessages
 } from './types';
 import Provider from './Provider';
+import L10n from './L10n';
 import Text from './Text';
 import { LocalizationContextType } from './types';
 
 export {
   Provider,
   Text,
-  LocalizationContextType
+  LocalizationContextType,
+  L10n
 };
 
 export type {
