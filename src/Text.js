@@ -24,7 +24,9 @@ function Text(props: Props, context: Context) {
   }
 
   return (
-    <Tag {...optional}>{text}</Tag>
+    <Tag {...optional}>
+      {text}
+    </Tag>
   );
 }
 
