@@ -3,17 +3,17 @@
  * @flow strict
  */
 
-import type { Node } from "react";
-import PropTypes from "prop-types";
+import type { Node } from 'react';
+import PropTypes from 'prop-types';
 
 export type FormatValues = { [key: string]: string };
 export type TextFormatter = (
   id: string,
   values?: FormatValues,
-  html?: boolean
+  html?: boolean,
 ) => string;
 export type ProviderMessages = {
-  [locale: string]: FormatValues
+  [locale: string]: FormatValues,
 };
 
 export type LocalizationContext = {
@@ -21,7 +21,7 @@ export type LocalizationContext = {
   locale: string,
   messages: ProviderMessages,
   globalValues: FormatValues,
-  defaultLocale: string
+  defaultLocale: string,
 };
 
 export const LocalizationContextType = PropTypes.shape({
@@ -29,7 +29,7 @@ export const LocalizationContextType = PropTypes.shape({
   locale: PropTypes.string.isRequired,
   messages: PropTypes.objectOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   globalValues: PropTypes.objectOf(PropTypes.string),
-  defaultLocale: PropTypes.string.isRequired
+  defaultLocale: PropTypes.string.isRequired,
 });
 
 export type ProviderProps = {
@@ -37,7 +37,7 @@ export type ProviderProps = {
   defaultLocale?: string,
   messages: ProviderMessages,
   globalValues: FormatValues,
-  children?: Node
+  children?: Node,
 };
 
 export const ProviderPropType = {
@@ -45,27 +45,27 @@ export const ProviderPropType = {
   defaultLocale: PropTypes.string.isRequired,
   messages: PropTypes.objectOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   globalValues: PropTypes.objectOf(PropTypes.string),
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
 };
 
 export type ProviderContext = {
-  l10n: LocalizationContext
+  l10n: LocalizationContext,
 };
 
 export const ProviderContextType = {
-  l10n: LocalizationContextType
+  l10n: LocalizationContextType,
 };
 
 export type TextProps = {
   id: string,
   values?: FormatValues,
   html?: boolean,
-  tagName?: string
+  tagName?: string,
 };
 
 export const TextPropType = {
   id: PropTypes.string.isRequired,
   values: PropTypes.objectOf(PropTypes.string.isRequired),
   html: PropTypes.bool,
-  tagName: PropTypes.string
+  tagName: PropTypes.string,
 };

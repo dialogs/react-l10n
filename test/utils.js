@@ -13,13 +13,13 @@ describe('utils', () => {
         {
           message: 'Hello, {name}!',
           values: { name: 'test' },
-          result: 'Hello, test!'
+          result: 'Hello, test!',
         },
         {
           message: 'Hello, {name} and {name}!',
           values: { name: 'test' },
-          result: 'Hello, test and test!'
-        }
+          result: 'Hello, test and test!',
+        },
       ];
 
       cases.forEach(({ message, values, result }) => {

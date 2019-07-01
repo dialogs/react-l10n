@@ -8,13 +8,7 @@ import React from 'react';
 import { TextPropType, LocalizationContextType } from './types';
 
 function Text(props: Props, context: Context) {
-  const {
-    id,
-    html,
-    values,
-    tagName: Tag = 'span',
-    ...optional
-  } = props;
+  const { id, html, values, tagName: Tag = 'span', ...optional } = props;
 
   const { l10n } = context;
   const text = l10n.formatText(id, values, html);
@@ -23,16 +17,12 @@ function Text(props: Props, context: Context) {
     return <Tag {...optional} dangerouslySetInnerHTML={{ __html: text }} />;
   }
 
-  return (
-    <Tag {...optional}>
-      {text}
-    </Tag>
-  );
+  return <Tag {...optional}>{text}</Tag>;
 }
 
 Text.propTypes = TextPropType;
 Text.contextTypes = {
-  l10n: LocalizationContextType
+  l10n: LocalizationContextType,
 };
 
 export default Text;

@@ -7,13 +7,13 @@ import type {
   TextFormatter,
   ProviderProps,
   ProviderContext,
-  FormatValues
+  FormatValues,
 } from './types';
 import { Component, Children } from 'react';
 import {
   ProviderPropType,
   ProviderContextType,
-  LocalizationContextType
+  LocalizationContextType,
 } from './types';
 import { escapeValues, formatMessage, getGlobalValues } from './utils';
 
@@ -29,11 +29,11 @@ class Provider extends Component<ProviderProps> {
   static defaultProps = {
     messages: {},
     defaultLocale: 'en',
-    globalValues: {}
+    globalValues: {},
   };
 
   static contextTypes = {
-    l10n: LocalizationContextType
+    l10n: LocalizationContextType,
   };
 
   constructor(props: ProviderProps, context: $Shape<ProviderContext> = {}) {
@@ -43,7 +43,11 @@ class Provider extends Component<ProviderProps> {
     this.formatText = this.getFormattedMessage.bind(this);
   }
 
-  shouldComponentUpdate(nextProps: ProviderProps, nextState: void, nextContext: $Shape<ProviderContext> = {}) {
+  shouldComponentUpdate(
+    nextProps: ProviderProps,
+    nextState: void,
+    nextContext: $Shape<ProviderContext> = {},
+  ) {
     return (
       nextProps.children !== this.props.children ||
       nextProps.locale !== this.props.locale ||
@@ -53,14 +57,20 @@ class Provider extends Component<ProviderProps> {
     );
   }
 
-  componentWillUpdate(nextProps: ProviderProps, nextState: void, nextContext?: ?$Shape<ProviderContext>) {
+  componentWillUpdate(
+    nextProps: ProviderProps,
+    nextState: void,
+    nextContext?: ?$Shape<ProviderContext>,
+  ) {
     this.globalValues = getGlobalValues(nextProps, nextContext);
   }
 
   getDefaultLocale(): string {
-    return this.props.defaultLocale ||
-           (this.context.l10n && this.context.l10n.defaultLocale) ||
-           'en';
+    return (
+      this.props.defaultLocale ||
+      (this.context.l10n && this.context.l10n.defaultLocale) ||
+      'en'
+    );
   }
 
   getChildContext(): ProviderContext {
@@ -70,8 +80,8 @@ class Provider extends Component<ProviderProps> {
         locale: this.props.locale,
         messages: this.props.messages,
         globalValues: this.globalValues,
-        defaultLocale: this.getDefaultLocale()
-      }
+        defaultLocale: this.getDefaultLocale(),
+      },
     };
   }
 
@@ -122,7 +132,11 @@ class Provider extends Component<ProviderProps> {
     return id;
   }
 
-  getFormattedMessage(id: string, values: FormatValues = {}, html: boolean = false): string {
+  getFormattedMessage(
+    id: string,
+    values: FormatValues = {},
+    html: boolean = false,
+  ): string {
     const translation = this.getTranslation(id);
 
     const mergedValues = Object.assign({}, this.globalValues, values);

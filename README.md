@@ -1,18 +1,15 @@
-React localization
-==================
+# React localization
 
 Localization for React components
 
-Installation
-------------
+## Installation
 
 ```
 npm install --save react
 npm install --save @dlghq/react-l10n
 ```
 
-Usage
------
+## Usage
 
 ```js
 import React from 'react';
@@ -21,7 +18,7 @@ import { Provider, Text } from '@dlghq/react-l10n';
 
 const messages = {
   'en-US': { hello: 'Hello' },
-  'ru-RU': { hello: 'Привет' }
+  'ru-RU': { hello: 'Привет' },
 };
 
 function Application() {
@@ -39,6 +36,6 @@ render(<Application />, container);
 
 [More examples in tests](test/index.js)
 
-License
--------
+## License
+
 [Apache-2.0](LICENSE)

@@ -10,19 +10,14 @@ import type {
   ProviderContext,
   TextProps,
   FormatValues,
-  ProviderMessages
+  ProviderMessages,
 } from './types';
 import Provider from './Provider';
 import L10n from './L10n';
 import Text from './Text';
 import { LocalizationContextType } from './types';
 
-export {
-  Provider,
-  Text,
-  LocalizationContextType,
-  L10n
-};
+export { Provider, Text, LocalizationContextType, L10n };
 
 export type {
   TextFormatter,
@@ -31,5 +26,5 @@ export type {
   ProviderContext,
   TextProps,
   FormatValues,
-  ProviderMessages
+  ProviderMessages,
 };

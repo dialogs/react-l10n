@@ -11,18 +11,18 @@ import { Provider, Text } from '../src/index';
 describe('@dlghq/react-l10n', () => {
   const messages = {
     en: { test: 'Test', hello: 'Hello, {name}', send: 'Send' },
-    ru: { test: 'Тест', hello: '<b>Привет</b>, {name}' }
+    ru: { test: 'Тест', hello: '<b>Привет</b>, {name}' },
   };
   const childMessages = {
     en: { child: 'Nice to meet you' },
-    ru: { child: 'Приятно познакомиться' }
+    ru: { child: 'Приятно познакомиться' },
   };
 
   it('should translate text', () => {
     const html = renderToStaticMarkup(
       <Provider messages={messages} locale="en">
         <Text id="test" />
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span>Test</span>');
@@ -32,7 +32,7 @@ describe('@dlghq/react-l10n', () => {
     const html = renderToStaticMarkup(
       <Provider messages={messages} locale="en">
         <Text id="test" />
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span>Test</span>');
@@ -42,7 +42,7 @@ describe('@dlghq/react-l10n', () => {
     const html = renderToStaticMarkup(
       <Provider messages={messages} locale="en">
         <Text id="hello" values={{ name: 'nkt' }} />
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span>Hello, nkt</span>');
@@ -52,7 +52,7 @@ describe('@dlghq/react-l10n', () => {
     const html = renderToStaticMarkup(
       <Provider messages={messages} locale="en">
         <Text id="test" className="label" tagName="label" htmlFor="input" />
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<label class="label" for="input">Test</label>');
@@ -62,7 +62,7 @@ describe('@dlghq/react-l10n', () => {
     const html = renderToStaticMarkup(
       <Provider messages={messages} locale="ru">
         <Text id="test" />
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span>Тест</span>');
@@ -72,7 +72,7 @@ describe('@dlghq/react-l10n', () => {
     const html = renderToStaticMarkup(
       <Provider messages={messages} locale="ru">
         <Text id="send" />
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span>Send</span>');
@@ -82,7 +82,7 @@ describe('@dlghq/react-l10n', () => {
     const html = renderToStaticMarkup(
       <Provider messages={messages} locale="en">
         <Text id="unexpected_id" />
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span>unexpected_id</span>');
@@ -92,7 +92,7 @@ describe('@dlghq/react-l10n', () => {
     const html = renderToStaticMarkup(
       <Provider messages={messages} locale="ru">
         <Text id="hello" values={{ name: 'nkt' }} />
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span>&lt;b&gt;Привет&lt;/b&gt;, nkt</span>');
@@ -102,7 +102,7 @@ describe('@dlghq/react-l10n', () => {
     const html = renderToStaticMarkup(
       <Provider messages={messages} locale="ru">
         <Text id="hello" values={{ name: 'nkt' }} html />
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span><b>Привет</b>, nkt</span>');
@@ -112,7 +112,7 @@ describe('@dlghq/react-l10n', () => {
     const html = renderToStaticMarkup(
       <Provider messages={messages} locale="ru">
         <Text id="hello" values={{ name: '<b>nkt</b>' }} html />
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span><b>Привет</b>, &lt;b&gt;nkt&lt;/b&gt;</span>');
@@ -120,9 +120,13 @@ describe('@dlghq/react-l10n', () => {
 
   it('should use global values', () => {
     const html = renderToStaticMarkup(
-      <Provider locale="en" messages={messages} globalValues={{ name: 'dialog' }}>
+      <Provider
+        locale="en"
+        messages={messages}
+        globalValues={{ name: 'dialog' }}
+      >
         <Text id="hello" />
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span>Hello, dialog</span>');
@@ -130,9 +134,13 @@ describe('@dlghq/react-l10n', () => {
 
   it('should use local value instead of global', () => {
     const html = renderToStaticMarkup(
-      <Provider locale="en" messages={messages} globalValues={{ name: 'dialog' }}>
+      <Provider
+        locale="en"
+        messages={messages}
+        globalValues={{ name: 'dialog' }}
+      >
         <Text id="hello" values={{ name: 'world' }} />
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span>Hello, world</span>');
@@ -144,7 +152,7 @@ describe('@dlghq/react-l10n', () => {
         <Provider locale="en" messages={childMessages}>
           <Text id="child" />
         </Provider>
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span>Nice to meet you</span>');
@@ -156,7 +164,7 @@ describe('@dlghq/react-l10n', () => {
         <Provider locale="ru" messages={childMessages}>
           <Text id="hello" values={{ name: 'мир' }} />
         </Provider>
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span>&lt;b&gt;Привет&lt;/b&gt;, мир</span>');
@@ -164,11 +172,15 @@ describe('@dlghq/react-l10n', () => {
 
   it('should use global value inside child provider', () => {
     const html = renderToStaticMarkup(
-      <Provider locale="ru" messages={messages} globalValues={{ name: 'dialog' }}>
+      <Provider
+        locale="ru"
+        messages={messages}
+        globalValues={{ name: 'dialog' }}
+      >
         <Provider locale="ru" messages={childMessages}>
           <Text id="hello" />
         </Provider>
-      </Provider>
+      </Provider>,
     );
 
     expect(html).equal('<span>&lt;b&gt;Привет&lt;/b&gt;, dialog</span>');

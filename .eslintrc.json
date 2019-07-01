@@ -1,10 +1,11 @@
 {
-  "extends": "@dlghq/eslint-config-dialog",
+  "extends": ["@dlghq/eslint-config-dialog", "prettier"],
   "env": {
     "mocha": true
   },
   "rules": {
     "no-duplicate-imports": 0,
-    "lines-between-class-members": 0
+    "lines-between-class-members": 0,
+    "react/jsx-one-expression-per-line": 0
   }
 }

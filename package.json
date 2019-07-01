@@ -13,7 +13,8 @@
     "test": "mocha --compilers js:@babel/register",
     "preversion": "npm test",
     "postversion": "npm publish",
-    "postpublish": "git push --follow-tags"
+    "postpublish": "git push --follow-tags",
+    "fmt": "prettier '**/*.{js,json,css,md,html}' --write"
   },
   "keywords": [
     "react",
@@ -37,11 +38,30 @@
     "@dlghq/eslint-config-dialog": "3.4.0",
     "chai": "4.2.0",
     "eslint": "5.9.0",
+    "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-react": "7.11.1",
     "flow-bin": "0.102.0",
+    "husky": "2.7.0",
+    "lint-staged": "8.2.1",
     "lodash": "4.17.11",
     "mocha": "5.2.0",
+    "prettier": "^1.18.2",
     "react": "16.6.3",
     "react-dom": "16.6.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.--write": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }

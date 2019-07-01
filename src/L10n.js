@@ -9,7 +9,7 @@ import { LocalizationContextType } from './types';
 import { type ProviderContext as Context } from './types';
 
 type L10nProps = {
-  children: Context => Node
+  children: (Context) => Node,
 };
 
 export function L10n({ children }: L10nProps, context: Context) {
@@ -17,7 +17,7 @@ export function L10n({ children }: L10nProps, context: Context) {
 }
 
 L10n.contextTypes = {
-  l10n: LocalizationContextType
+  l10n: LocalizationContextType,
 };
 
 export default L10n;
