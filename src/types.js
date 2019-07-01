@@ -1,13 +1,17 @@
 /*
  * Copyright 2017 dialog LLC <info@dlg.im>
- * @flow
+ * @flow strict
  */
 
-import type { Element } from 'react';
-import PropTypes from 'prop-types';
+import type { Node } from "react";
+import PropTypes from "prop-types";
 
 export type FormatValues = { [key: string]: string };
-export type TextFormatter = (id: string, values?: FormatValues, html?: boolean) => string;
+export type TextFormatter = (
+  id: string,
+  values?: FormatValues,
+  html?: boolean
+) => string;
 export type ProviderMessages = {
   [locale: string]: FormatValues
 };
@@ -23,9 +27,7 @@ export type LocalizationContext = {
 export const LocalizationContextType = PropTypes.shape({
   formatText: PropTypes.func.isRequired,
   locale: PropTypes.string.isRequired,
-  messages: PropTypes.objectOf(
-    PropTypes.objectOf(PropTypes.string)
-  ).isRequired,
+  messages: PropTypes.objectOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   globalValues: PropTypes.objectOf(PropTypes.string),
   defaultLocale: PropTypes.string.isRequired
 });
@@ -35,15 +37,13 @@ export type ProviderProps = {
   defaultLocale?: string,
   messages: ProviderMessages,
   globalValues: FormatValues,
-  children?: Element<any>
+  children?: Node
 };
 
 export const ProviderPropType = {
   locale: PropTypes.string.isRequired,
   defaultLocale: PropTypes.string.isRequired,
-  messages: PropTypes.objectOf(
-    PropTypes.objectOf(PropTypes.string)
-  ).isRequired,
+  messages: PropTypes.objectOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   globalValues: PropTypes.objectOf(PropTypes.string),
   children: PropTypes.element.isRequired
 };
@@ -65,9 +65,7 @@ export type TextProps = {
 
 export const TextPropType = {
   id: PropTypes.string.isRequired,
-  values: PropTypes.objectOf(
-    PropTypes.string.isRequired
-  ),
+  values: PropTypes.objectOf(PropTypes.string.isRequired),
   html: PropTypes.bool,
   tagName: PropTypes.string
 };

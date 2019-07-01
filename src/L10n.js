@@ -1,6 +1,6 @@
 /*
  * Copyright 2017 dialog LLC <info@dlg.im>
- * @flow
+ * @flow strict
  */
 
 import { type Node } from 'react';
