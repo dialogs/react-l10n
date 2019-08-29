@@ -20,6 +20,7 @@ module.use_strict=true
 suppress_type=$FlowIssue
 suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
 esproposal.class_static_fields=enable
+exact_by_default=true
 
 [strict]
 nonstrict-import

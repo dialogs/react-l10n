@@ -6,7 +6,10 @@
 import type { Node } from 'react';
 import PropTypes from 'prop-types';
 
-export type FormatValues = { [key: string]: string };
+export type FormatValues = {
+  [key: string]: string,
+  ...,
+};
 export type TextFormatter = (
   id: string,
   values?: FormatValues,
@@ -14,6 +17,7 @@ export type TextFormatter = (
 ) => string;
 export type ProviderMessages = {
   [locale: string]: FormatValues,
+  ...,
 };
 
 export type LocalizationContext = {
@@ -61,6 +65,8 @@ export type TextProps = {
   values?: FormatValues,
   html?: boolean,
   tagName?: string,
+  className?: string,
+  htmlFor?: string,
 };
 
 export const TextPropType = {
@@ -68,4 +74,6 @@ export const TextPropType = {
   values: PropTypes.objectOf(PropTypes.string.isRequired),
   html: PropTypes.bool,
   tagName: PropTypes.string,
+  className: PropTypes.string,
+  htmlFor: PropTypes.string,
 };

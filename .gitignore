@@ -7,3 +7,5 @@ yarn.lock
 lib/
 
 flow-typed/npm
+
+.vscode/settings.json
